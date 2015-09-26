@@ -20,8 +20,7 @@ import org.opencv.objdetect.CascadeClassifier;
  */
 public class FaceCapture {
     public void saveFace() {
-        int x = 0, y = 0, height = 0, width = 0;
-
+    	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         System.out.println("\nRunning FaceDetector");
 
         CascadeClassifier faceDetector = new CascadeClassifier(FaceCapture.class.getResource("haarcascade_frontalface_alt.xml").getPath().substring(1));
@@ -40,9 +39,5 @@ public class FaceCapture {
 
         System.out.println("save face...");
     }
-    public  static void main(String []args){
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-         FaceCapture face = new FaceCapture();
-         face.saveFace();
-    }
+
 }
