@@ -1,3 +1,4 @@
+package kinect;
 
 // KinectCapture.java
 // Andrew Davison, December 2011, ad@fivedots.psu.ac.th

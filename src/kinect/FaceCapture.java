@@ -1,3 +1,4 @@
+package kinect;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -35,7 +36,7 @@ public class FaceCapture {
         rectCrop = new Rect(rect.x, rect.y, rect.width, rect.height);
         }
         Mat image_roi = new Mat(image,rectCrop);
-        Highgui.imwrite("cropimage_912.jpg",image_roi);
+        Highgui.imwrite("screancapture.jpg",image_roi);
 
         System.out.println("save face...");
     }
