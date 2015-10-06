@@ -1,7 +1,9 @@
-package dao;
+package com.dao;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import item.PersonItem;
+import com.item.PersonItem;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 public class SqlHelper {
 	public boolean addPerson(PersonItem person) {
@@ -71,9 +73,9 @@ public class SqlHelper {
 		}
 		return ISSUCEESS;
 	}
-	public PersonItem findPerson(String personId){
+	public PersonItem findPerson(int id){
 		PersonItem person =null;
-		String sql = "select * from person where personId='"+personId+"'";
+		String sql = "select * from person where id="+id;
 		try {
 			java.sql.ResultSet rs = SqlUtils.executeQuery(sql);
 			while(rs.next()){
@@ -92,4 +94,29 @@ public class SqlHelper {
 		}
 		return person;
 	}
+	public int size(){
+		int size = 0;
+		ResultSet rs = null;
+		String sql = "select count(*) from person";
+		try{
+			 rs = SqlUtils.executeQuery(sql);
+			while(rs.next()){
+				size = rs.getInt(1);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return size;
+	}
+	public ResultSet findHead() {
+		ResultSet rs = null;
+		String sql = "select id,headUrl from person";
+		try{
+			rs = SqlUtils.executeQuery(sql);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
 }

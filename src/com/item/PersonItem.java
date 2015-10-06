@@ -1,13 +1,20 @@
-package item;
+package com.item;
 
 public class PersonItem {
-	
+	private int id;
 	private String personId;
 	private String name;
 	private String sex;
 	private String address;
 	private String cardId;
 	private String headUrl;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getPersonId() {
 		return personId;
 	}

@@ -1,4 +1,4 @@
-package kinect;
+package com.kinect;
 
 import static org.bytedeco.javacpp.helper.opencv_objdetect.cvHaarDetectObjects;
 import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_8U;
