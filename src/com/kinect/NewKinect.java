@@ -13,10 +13,13 @@ import static org.bytedeco.javacpp.opencv_imgproc.cvRectangle;
 import static org.bytedeco.javacpp.opencv_objdetect.CV_HAAR_DO_CANNY_PRUNING;
 
 import java.awt.AWTException;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.color.ColorSpace;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.io.File;
@@ -25,7 +28,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.bytedeco.javacpp.Loader;
@@ -41,6 +46,8 @@ import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -50,9 +57,10 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  *
  * @author stone
  */
-public class NewKinect {
+public class NewKinect  extends CanvasFrame{
 
 	DaemonThread myThread = null;
+	Thread t = null;
 	private static final int DELAY = 35;
 
 	BufferedImage image = null;
@@ -66,21 +74,35 @@ public class NewKinect {
 
 	CanvasFrame rootFrame = null;
 	JPanel jp = null;
-	JButton jb = null;
-
-
+	JButton jb1 = null;
+	JButton jb2 = null;
+	JButton jb3 = null;
+	JButton jb4 = null;
 	opencv_objdetect.CvHaarClassifierCascade classifier;
 	opencv_core.CvSeq faces;
 
 	public NewKinect() {
-
-		rootFrame = new CanvasFrame("hello");
-		rootFrame.setLayout(new FlowLayout());
+		super("hello");
+		
+		this.setLayout(new FlowLayout());
+		this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		
 		jp = new JPanel();
-		jb = new JButton("hello");
-		jp.add(jb);
-		rootFrame.add(jp);
-		jb.addActionListener(new java.awt.event.ActionListener() {
+		jb1 = new JButton("识别人脸");
+//		jb2 = new JButton("打开摄像头");
+//		jb3 = new JButton("关闭");
+		jb4 = new JButton("退出");
+		GridLayout gLayout = new GridLayout(2, 1);
+		gLayout.setVgap(80);
+		jp.setLayout(gLayout);
+		jp.add(jb1);
+		jp.add(jb2);
+		jp.add(jb3);
+		jp.add(jb4);
+		this.setSize(800, 700);
+		this.add(jp);
+		rootFrame = this;
+		jb1.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
 					jbActionPerformed(evt);
@@ -91,6 +113,7 @@ public class NewKinect {
 				}
 			}
 		});
+
 		String classifierName = "haarcascade_frontalface_alt.xml";
 
 		try {
@@ -112,7 +135,7 @@ public class NewKinect {
 		}
 
 		myThread = new DaemonThread();
-		Thread t = new Thread(myThread);
+		t = new Thread(myThread);
 		t.setDaemon(true);
 		t.start();
 
@@ -120,9 +143,10 @@ public class NewKinect {
 
 	private void jbActionPerformed(ActionEvent evt) throws IOException, AWTException {
 
-		screenCapture(image);
-		FaceCapture fCapture = new FaceCapture();
-		fCapture.saveFace();
+//		screenCapture(image);
+//		FaceCapture fCapture = new FaceCapture();
+//		fCapture.saveFace();
+
 		// To change body of generated methods, choose Tools | Templates.
 	}
 
@@ -174,6 +198,9 @@ public class NewKinect {
 
 					faces = cvHaarDetectObjects(grayImage, classifier, storage, 1.1, 3, CV_HAAR_DO_CANNY_PRUNING);
 					int total = faces.total();
+					if(total<=0){
+						JOptionPane.showMessageDialog(rootFrame, "对准摄像头，请勿遮挡脸部！","警告", JOptionPane.WARNING_MESSAGE);
+					}
 					for (int i = 0; i < total; i++) {
 						CvRect r = new CvRect(cvGetSeqElem(faces, i));
 						int x = r.x(), y = r.y(), w = r.width(), h = r.height();
@@ -185,17 +212,17 @@ public class NewKinect {
 
 					Frame rotatedFrame = converter.convert(grabbedImage);
 					rootFrame.showImage(rotatedFrame);
-
+					
 				}
 				if (duration < DELAY) {
 					try {
 						Thread.sleep(DELAY - duration); // wait until delay time
 														// has passed
-					} catch (Exception ex) {
+					} catch (InterruptedException ex) {
 					}
 				}
 			}
-			camera.close();
+			
 		}
 
 	}
@@ -211,4 +238,8 @@ public class NewKinect {
 		ImageIO.write(newPic, "jpg", file);
 		System.out.println("hello1");
 	}
+
+
+
+
 }

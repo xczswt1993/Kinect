@@ -15,6 +15,7 @@ import org.opencv.imgproc.Imgproc;
 
 import com.dao.SqlHelper;
 import com.item.PersonItem;
+import com.kinect.MainFrom;
 import com.picutils.Utils;
 
 public class TestFace {
@@ -59,7 +60,8 @@ public class TestFace {
 		int index = test.test();
 		PersonItem peson = sqlHelper.findPerson(index);
 		System.out.println(peson.getName());
-
+		MainFrom mainFrom = new MainFrom("E:/faceImage/face1.jpg");
+		mainFrom.show();
 	}
 	public Mat toGray(String imgeName){
 		Mat inMat = Highgui.imread(imgeName);
