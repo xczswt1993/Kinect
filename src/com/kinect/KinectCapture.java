@@ -22,8 +22,6 @@ import java.nio.ByteBuffer;
 
 import org.OpenNI.*;
 
-
-
 enum Resolution {
   NORMAL, HIGH
 }
@@ -36,7 +34,7 @@ public class KinectCapture
   private int fps;
 
   private boolean isReleased = true;    
-           // when Kinect context has been released
+ // when Kinect context has been released
 
   // OpenNI
   private Context context;
