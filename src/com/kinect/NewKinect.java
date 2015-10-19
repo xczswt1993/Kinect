@@ -96,8 +96,6 @@ public class NewKinect  extends CanvasFrame{
 		gLayout.setVgap(80);
 		jp.setLayout(gLayout);
 		jp.add(jb1);
-		jp.add(jb2);
-		jp.add(jb3);
 		jp.add(jb4);
 		this.setSize(800, 700);
 		this.add(jp);
