@@ -19,7 +19,9 @@ import com.kinect.MainFrom;
 import com.picutils.Utils;
 
 public class TestFace {
-	public int test(){
+	public int test(String imgefile){
+		Utils utils = new Utils(imgefile);
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		FisherFaceRecognizer fr = new FisherFaceRecognizer();
 		List<Mat> trainData = new ArrayList<Mat>();
 		SqlHelper sqlHelper = new SqlHelper();
@@ -45,7 +47,7 @@ public class TestFace {
 		
 		labels.put(0, 0, l);
 		fr.train(trainData, labels);
-		Mat test= toGray("face2.jpg");
+		Mat test= toGray(imgefile);
 		double [] confidence = new double[1];
 		
 		fr.predict(test, l, confidence);
@@ -54,10 +56,10 @@ public class TestFace {
 		
 	}
 	public static void main(String []args){
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		
 		TestFace test = new TestFace();
 		SqlHelper sqlHelper = new SqlHelper();
-		int index = test.test();
+		int index = test.test("face2.jpg");
 		PersonItem peson = sqlHelper.findPerson(index);
 		System.out.println(peson.getName());
 		MainFrom mainFrom = new MainFrom("E:/faceImage/face1.jpg");
