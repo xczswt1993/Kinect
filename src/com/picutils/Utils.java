@@ -22,13 +22,13 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 public class Utils {
-	public Utils(String fileName){
-		saveFace(fileName);
-		changeToGray(fileName);
-		zoomImage(fileName, fileName);
+	public Utils(String fileName) {
+			saveFace(fileName);
+			changeToGray(fileName);
+			zoomImage(fileName, fileName);
 	}
 
-	public  void changeToGray(String fileName) {
+	public void changeToGray(String fileName) {
 		System.out.println("change to gray ...");
 		try {
 			System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -55,28 +55,34 @@ public class Utils {
 		}
 	}
 
-	public  void saveFace(String fileName) {
+	public boolean saveFace(String fileName) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		boolean isExist = false;
 		System.out.println("\nRunning FaceDetector");
 		CascadeClassifier faceDetector = new CascadeClassifier(
 				Utils.class.getResource("haarcascade_frontalface_alt.xml").getPath().substring(1));
 		Mat image = Highgui.imread(fileName);
 		MatOfRect faceDetections = new MatOfRect();
 		faceDetector.detectMultiScale(image, faceDetections);
-		System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
-		Rect rectCrop = null;
-		for (Rect rect : faceDetections.toArray()) {
-			Core.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
-					new Scalar(0, 255, 0));
-			rectCrop = new Rect(rect.x, rect.y, rect.width, rect.height);
+		if (faceDetections.toArray().length > 0) {
+			System.out.println(String.format("Detected %s faces", faceDetections.toArray().length));
+			Rect rectCrop = null;
+			for (Rect rect : faceDetections.toArray()) {
+				Core.rectangle(image, new Point(rect.x, rect.y), new Point(rect.x + rect.width, rect.y + rect.height),
+						new Scalar(0, 255, 0));
+				rectCrop = new Rect(rect.x, rect.y, rect.width, rect.height);
+			}
+			Mat image_roi = new Mat(image, rectCrop);
+			Highgui.imwrite(fileName, image_roi);
+			isExist = true;
+			System.out.println("save face...");
+		} else {
+			isExist = false;
 		}
-		Mat image_roi = new Mat(image, rectCrop);
-		Highgui.imwrite(fileName, image_roi);
-
-		System.out.println("save face...");
+		return isExist;
 	}
 
-	public  void zoomImage(String src, String dest) {
+	public void zoomImage(String src, String dest) {
 		System.out.println("zoom picutre ...");
 		int w = 125;
 		int h = 150;
