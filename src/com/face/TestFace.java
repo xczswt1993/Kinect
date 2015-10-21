@@ -20,7 +20,7 @@ import com.picutils.Utils;
 
 public class TestFace {
 	public int test(String imgefile){
-		Utils utils = new Utils(imgefile);
+//		Utils utils = new Utils(imgefile);
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		FisherFaceRecognizer fr = new FisherFaceRecognizer();
 		List<Mat> trainData = new ArrayList<Mat>();
@@ -59,10 +59,7 @@ public class TestFace {
 		
 		TestFace test = new TestFace();
 		SqlHelper sqlHelper = new SqlHelper();
-		int index = test.test("face2.jpg");
-		PersonItem peson = sqlHelper.findPerson(index);
-		System.out.println(peson.getName());
-		MainFrom mainFrom = new MainFrom("E:/faceImage/face1.jpg");
+		MainFrom mainFrom = new MainFrom("d:/face1.jpg");
 		mainFrom.show();
 	}
 	public Mat toGray(String imgeName){
