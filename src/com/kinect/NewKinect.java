@@ -46,6 +46,7 @@ import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 
+import com.picutils.Utils;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
 /*
@@ -141,8 +142,9 @@ public class NewKinect  extends CanvasFrame{
 
 	private void jbActionPerformed(ActionEvent evt) throws IOException, AWTException {
 
-//		screenCapture(image);
-//		FaceCapture fCapture = new FaceCapture();
+		File file = screenCapture(image);
+		MainFrom mainFrom = new MainFrom(file.getAbsolutePath());
+		mainFrom.show();
 //		fCapture.saveFace();
 
 		// To change body of generated methods, choose Tools | Templates.
@@ -225,16 +227,18 @@ public class NewKinect  extends CanvasFrame{
 
 	}
 
-	private void screenCapture(BufferedImage orgImg) throws IOException, AWTException {
+	private File screenCapture(BufferedImage orgImg) throws IOException, AWTException {
 
 		int imageWidth = orgImg.getWidth();
 		int imageHeight = orgImg.getHeight();
 		BufferedImage newPic = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_3BYTE_BGR);
 		ColorConvertOp cco = new ColorConvertOp(ColorSpace.getInstance(ColorSpace.CS_GRAY), null);
 		cco.filter(orgImg, newPic);
-		File file = new File("screancapture.jpg");
+		String imgPath = "e:/faceImage/temp";
+		String imgName= System.currentTimeMillis()+".jpg";
+		File file = new File(imgPath+imgName);
 		ImageIO.write(newPic, "jpg", file);
-		System.out.println("hello1");
+		return file;
 	}
 
 
