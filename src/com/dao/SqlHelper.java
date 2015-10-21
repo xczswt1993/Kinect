@@ -94,6 +94,27 @@ public class SqlHelper {
 		}
 		return person;
 	}
+	public PersonItem findPerson(String personId){
+		PersonItem person =null;
+		String sql = "select * from person where personId='"+personId+"'";
+		try {
+			java.sql.ResultSet rs = SqlUtils.executeQuery(sql);
+			while(rs.next()){
+				person = new PersonItem();
+				person.setPersonId(rs.getString(2));
+				person.setName(rs.getString(3));
+				person.setSex(rs.getString(4));
+				person.setAddress(rs.getString(5));
+				person.setCardId(rs.getString(6));
+				person.setHeadUrl(rs.getString(7));
+			}
+			System.out.println("find person ...");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return person;
+	}
 	public int size(){
 		int size = 0;
 		ResultSet rs = null;
