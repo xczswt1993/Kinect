@@ -48,10 +48,12 @@ public class TestFace {
 		labels.put(0, 0, l);
 		fr.train(trainData, labels);
 		Mat test= toGray(imgefile);
-		double [] confidence = new double[1];
-		
+		double [] confidence = new double[1];		
 		fr.predict(test, l, confidence);
-		
+		System.out.println("confidence:"+confidence[0]);
+		if(confidence[0]>1000.00){
+			return -1;
+		}
 		return l[0];
 		
 	}
@@ -59,7 +61,7 @@ public class TestFace {
 		
 		TestFace test = new TestFace();
 		SqlHelper sqlHelper = new SqlHelper();
-		MainFrom mainFrom = new MainFrom("d:/face1.jpg");
+		MainFrom mainFrom = new MainFrom("e:/faceImage/temp/face2.jpg");
 		mainFrom.show();
 	}
 	public Mat toGray(String imgeName){
