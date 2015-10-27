@@ -11,7 +11,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.dao.SqlHelper;
-import com.face.TestFace;
+import com.face.FaceReg;
 import com.item.PersonItem;
 import com.picutils.Utils;
 
@@ -33,7 +33,7 @@ public class MainFrom extends javax.swing.JFrame {
 	 */
 	public MainFrom(String picPath) {
 		this.imgFile = picPath;
-//		Utils utils = new Utils(picPath);
+		Utils utils = new Utils(picPath);
 		initComponents();
 		Icon icon = new ImageIcon(picPath);
 		jl_pic.setIcon(icon);
@@ -87,7 +87,7 @@ public class MainFrom extends javax.swing.JFrame {
 
 		jMenu3.setText("jMenu3");
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
 		jl_pic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -222,7 +222,7 @@ public class MainFrom extends javax.swing.JFrame {
 										.addGroup(
 												layout.createSequentialGroup().addComponent(jLabel8).addGap(51, 51, 51)
 														.addComponent(jl_addr, javax.swing.GroupLayout.PREFERRED_SIZE,
-																155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+																170, javax.swing.GroupLayout.PREFERRED_SIZE)))
 								.addContainerGap())
 								.addGroup(layout.createSequentialGroup().addGap(83, 83, 83)
 										.addComponent(jl_pic_re, javax.swing.GroupLayout.PREFERRED_SIZE, 125,
@@ -296,16 +296,16 @@ public class MainFrom extends javax.swing.JFrame {
 	}
 
 	private void jb_queryActionPerformed(java.awt.event.ActionEvent evt) {
-		TestFace test = new TestFace();
+		FaceReg test = new FaceReg();
 		SqlHelper sqlHelper = new SqlHelper();
-		int index = test.test(imgFile);
+		int index = test.Recognizer(imgFile);
 		if (index > 0) {
 			PersonItem person = sqlHelper.findPerson(index);
 			Icon piIcon = new ImageIcon(person.getHeadUrl());
 			jl_pic_re.setIcon(piIcon);
 			jl_name.setText(person.getName());
 			jl_sex.setText(person.getSex());
-			jl_addr.setText(person.getAddress());
+			jl_addr.setText("<html>"+person.getAddress()+"</html>");
 		} else {
 			JOptionPane.showMessageDialog(this, "数据库没有此人信息", "提示", JOptionPane.WARNING_MESSAGE);
 		}

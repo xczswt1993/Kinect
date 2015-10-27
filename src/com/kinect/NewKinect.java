@@ -207,9 +207,6 @@ public class NewKinect  extends CanvasFrame{
 						cvRectangle(grabbedImage, cvPoint(x, y), cvPoint(x + w, y + h), CvScalar.RED, 1, CV_AA, 0);
 
 					}
-					// cvThreshold(grayImage, grayImage, 64, 255,
-					// CV_THRESH_BINARY);
-
 					Frame rotatedFrame = converter.convert(grabbedImage);
 					rootFrame.showImage(rotatedFrame);
 					

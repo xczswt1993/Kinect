@@ -18,9 +18,8 @@ import com.item.PersonItem;
 import com.kinect.MainFrom;
 import com.picutils.Utils;
 
-public class TestFace {
-	public int test(String imgefile){
-//		Utils utils = new Utils(imgefile);
+public class FaceReg {
+	public int Recognizer(String imgefile){
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		FisherFaceRecognizer fr = new FisherFaceRecognizer();
 		List<Mat> trainData = new ArrayList<Mat>();
@@ -59,9 +58,9 @@ public class TestFace {
 	}
 	public static void main(String []args){
 		
-		TestFace test = new TestFace();
+		FaceReg test = new FaceReg();
 		SqlHelper sqlHelper = new SqlHelper();
-		MainFrom mainFrom = new MainFrom("e:/faceImage/temp/face2.jpg");
+		MainFrom mainFrom = new MainFrom("e:/faceImage/temp/face4.jpg");
 		mainFrom.show();
 	}
 	public Mat toGray(String imgeName){

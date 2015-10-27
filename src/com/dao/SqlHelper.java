@@ -14,7 +14,7 @@ public class SqlHelper {
 		String cardId = person.getCardId();
 		String headUrl = person.getHeadUrl();
 		
-		String sql = "insert into person (personId,name,sex,address,cardId,headUrl) values('"
+		String sql = "insert into t_person (personId,name,sex,address,cardId,headUrl) values('"
 		+personId+"','"+name+"','"+sex+"','"+address+"','"+
 				cardId+"','"+headUrl+"')";
 		
@@ -37,7 +37,7 @@ public class SqlHelper {
 		String personId = person.getPersonId();
 		String name = person.getName();
 		
-		String sql = "delete from person where personId='"+personId+"' and name='"+name+"'";
+		String sql = "delete from t_person where personId='"+personId+"' and name='"+name+"'";
 		
 		boolean ISSUCCESS = false;
 		try{
@@ -53,7 +53,7 @@ public class SqlHelper {
 	}
 	
 	public boolean updatePerson(PersonItem person){
-		String sql = "update person set name='"+person.getName()+
+		String sql = "update t_person set name='"+person.getName()+
 				"',sex='"+person.getSex()+
 				"',address='"+person.getAddress()+
 				"',cardId='"+person.getCardId()+
@@ -75,7 +75,7 @@ public class SqlHelper {
 	}
 	public PersonItem findPerson(int id){
 		PersonItem person =null;
-		String sql = "select * from person where id="+id;
+		String sql = "select * from t_person where id="+id;
 		try {
 			java.sql.ResultSet rs = SqlUtils.executeQuery(sql);
 			while(rs.next()){
@@ -96,7 +96,7 @@ public class SqlHelper {
 	}
 	public PersonItem findPerson(String personId){
 		PersonItem person =null;
-		String sql = "select * from person where personId='"+personId+"'";
+		String sql = "select * from t_person where personId='"+personId+"'";
 		try {
 			java.sql.ResultSet rs = SqlUtils.executeQuery(sql);
 			while(rs.next()){
@@ -118,7 +118,7 @@ public class SqlHelper {
 	public int size(){
 		int size = 0;
 		ResultSet rs = null;
-		String sql = "select count(*) from person";
+		String sql = "select count(*) from t_person";
 		try{
 			 rs = SqlUtils.executeQuery(sql);
 			while(rs.next()){
@@ -131,7 +131,7 @@ public class SqlHelper {
 	}
 	public ResultSet findHead() {
 		ResultSet rs = null;
-		String sql = "select id,headUrl from person";
+		String sql = "select id,headUrl from t_person";
 		try{
 			rs = SqlUtils.executeQuery(sql);
 		}catch(Exception e){
